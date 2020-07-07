@@ -16,8 +16,6 @@ class Review extends Component {
 			zip: "",
 			email: "",
 			loading: true,
-			set: false,
-			result: "",
 			trigger: false,
 		};
 
@@ -44,10 +42,6 @@ class Review extends Component {
 			lastname,
 			zipcode,
 			email,
-			loading,
-			set,
-			result,
-			trigger,
 		} = this.state;
 
 		return (

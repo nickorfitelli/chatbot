@@ -11,7 +11,8 @@ export class Weather extends Component {
 			trigger: false,
 			result: false,
 			error: false,
-			error_msg: "",
+            error_msg: "",
+            city: ""
 		};
 
 		this.triggetNext = this.triggetNext.bind(this);
@@ -22,7 +23,9 @@ export class Weather extends Component {
         console.log(self.props.steps.zipcode.value)
 		self.setState({ loading: true });
 		// const hostname = process.env.REACT_APP_HOSTNAME;
-		const url = `http://api.openweathermap.org/data/2.5/weather?zip=${self.props.steps.zipcode.value},us&appid=defbd6e67d1870e6b1d66a6cfe34f95b`;
+        const url = `http://api.openweathermap.org/data/2.5/weather?zip=${self.props.steps.zipcode.value},us&appid=defbd6e67d1870e6b1d66a6cfe34f95b`;
+        
+
 
 		fetch(url)
 			.then(function(response) {
@@ -35,10 +38,13 @@ export class Weather extends Component {
 			.then(function(responseAsJson) {
 				// // Do stuff with the JSON
                  var output = responseAsJson.main.temp;
+                 var cityname = responseAsJson.name;
                  
                  output = Math.floor(output * (9/5) -459.67);
 				 self.setState({ loading: false });
-				 self.setState({ weather: output });
+                 self.setState({ weather: output });
+				 self.setState({ city: cityname });
+                 
 			})
 			.catch(function(error) {
 				console.log("Looks like there was a problem: \n", error);
@@ -59,10 +65,9 @@ export class Weather extends Component {
 		const {
 			loading,
 			weather,
-			trigger,
-			result,
 			error,
-			error_msg,
+            error_msg,
+            city
 		} = this.state;
 
 		if (loading) {
@@ -79,7 +84,7 @@ export class Weather extends Component {
 		} else {
 			return (
 				<div>
-					Today's Temp: {weather} Degrees Farenheit
+					It's {weather} Degrees Farenheit in {city}
 				</div>
 			);
 		}

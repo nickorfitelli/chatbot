@@ -11,7 +11,9 @@ export class Weather extends Component {
 			trigger: false,
 			result: false,
 			error: false,
-			error_msg: "",
+            error_msg: "",
+            city:"",
+            img: ""
 		};
 
 		this.triggetNext = this.triggetNext.bind(this);
@@ -35,9 +37,17 @@ export class Weather extends Component {
 			.then(function(responseAsJson) {
 				// // Do stuff with the JSON
                  var output = responseAsJson.weather[0].description;
+                 var cityname = responseAsJson.name;
+                 var imgurl = `http://openweathermap.org/img/wn/${responseAsJson.weather[0].icon}@2x.png`
+                 output = output.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' ');
+                 console.log(cityname)
                  console.log(output);
 				 self.setState({ loading: false });
-				 self.setState({ weather: output });
+                 self.setState({ weather: output });
+                 self.setState({ city: cityname });
+				 self.setState({ img: imgurl });
+                 
+                 
 			})
 			.catch(function(error) {
 				console.log("Looks like there was a problem: \n", error);
@@ -58,10 +68,10 @@ export class Weather extends Component {
 		const {
 			loading,
 			weather,
-			trigger,
-			result,
 			error,
-			error_msg,
+            error_msg,
+            city,
+            img
 		} = this.state;
 
 		if (loading) {
@@ -78,7 +88,8 @@ export class Weather extends Component {
 		} else {
 			return (
 				<div>
-					Today's Weather: {weather}
+					Today's Weather in {city}: {weather}  <br></br>
+                    <img src= {img} width = "50px"></img>
 				</div>
 			);
 		}
