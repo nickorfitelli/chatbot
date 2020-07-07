@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ChatBot from "react-simple-chatbot";
 import Weather from "./Weather.js"
+import Temp from "./Temp.js"
 
 class Review extends Component {
 	//init local state, assigning object to this.state
@@ -28,28 +29,6 @@ class Review extends Component {
 
 		const { firstname, lastname, zipcode, email } = steps;
 
-		const endpoint = encodeURI(
-			`http://api.openweathermap.org/data/2.5/weather?zip=94533,us&appid=defbd6e67d1870e6b1d66a6cfe34f95b`
-		);
-
-		fetch(endpoint)
-			.then(function(response) {
-				// The API call was successful!
-				if (response.ok) {
-					return response.json();
-				} else {
-					return Promise.reject(response);
-				}
-			})
-			.then(function(data) {
-				// This is the JSON from our response
-				console.log(data);
-			})
-			.catch(function(err) {
-				// There was an error
-				console.warn("Something went wrong.", err);
-			});
-
 		this.setState({ firstname, lastname, zipcode, email });
 	}
 
@@ -70,10 +49,6 @@ class Review extends Component {
 			result,
 			trigger,
 		} = this.state;
-
-		if(loading && set) {
-			return <p>Just a min...need some time to think</p>;
-		}
 
 		return (
 			<div style={{ overflow: "auto" }}>
@@ -100,150 +75,148 @@ Review.defaultProps = {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////
-
 class SimpleForm extends Component {
 	render() {
 		return (
 			<>
 				<ChatBot
 					steps={[
-						// {
-						// 	id: "firstnameQ",
-						// 	message: "What is your first name?",
-						// 	trigger: "firstname",
-						// },
-						// {
-						// 	id: "firstname",
-						// 	user: true,
-						// 	trigger: "lastnameQ",
-						// 	placeholder: "Enter First Name Here...",
-						// },
-						// {
-						// 	id: "lastnameQ",
-						// 	message:
-						// 		"Hi {previousValue}! What is your last name?",
-						// 	trigger: "lastname",
-						// },
-						// {
-						// 	id: "lastname",
-						// 	user: true,
-						// 	trigger: "zipcodeQ",
-						// 	placeholder: "Enter Last Name Here...",
-						// },
-						// {
-						// 	id: "zipcodeQ",
-						// 	message: "What is your zipcode?",
-						// 	trigger: "zipcode",
-						// },
-						// {
-						// 	id: "zipcode",
-						// 	user: true,
-						// 	trigger: "emailQ",
-						// 	placeholder: "Enter Zip Code Here...",
-						// 	validator: (value) => {
-						// 		let zip = value;
-						// 		console.log(zip);
-						// 		if (isNaN(zip)) {
-						// 			return "must be a valid zip";
-						// 		}
-						// 		return true;
-						// 	},
-						// },
-						// {
-						// 	id: "emailQ",
-						// 	message: "What is your email address?",
-						// 	trigger: "email",
-						// },
-						// {
-						// 	id: "email",
-						// 	user: true,
-						// 	trigger: "summary",
-						// 	placeholder: "Enter Email Here...",
-						// },
-						// {
-						// 	id: "summary",
-						// 	message: "Great! Check out your summary below",
-						// 	trigger: "review",
-						// },
-						// {
-						// 	id: "review",
-						// 	component: <Review />,
-						// 	asMessage: true,
-						// 	trigger: "update",
-						// },
-						// {
-						// 	id: "update",
-						// 	message: "Would you like to update anything?",
-						// 	trigger: "update-question",
-						// },
-						// {
-						// 	id: "update-question",
-						// 	options: [
-						// 		{
-						// 			value: "yes",
-						// 			label: "Yes",
-						// 			trigger: "update-yes",
-						// 		},
-						// 		{ value: "no", label: "No", trigger: "askme" },
-						// 	],
-						// },
-						// {
-						// 	id: "update-yes",
-						// 	message: "What field would you like to update?",
-						// 	trigger: "update-fields",
-						// },
-						// {
-						// 	id: "update-fields",
-						// 	options: [
-						// 		{
-						// 			value: "firstname",
-						// 			label: "First Name",
-						// 			trigger: "update-fname",
-						// 		},
-						// 		{
-						// 			value: "lastname",
-						// 			label: "Last Name",
-						// 			trigger: "update-lname",
-						// 		},
-						// 		{
-						// 			value: "zipcode",
-						// 			label: "Zip",
-						// 			trigger: "update-zip",
-						// 		},
-						// 		{
-						// 			value: "email",
-						// 			label: "Email",
-						// 			trigger: "update-email",
-						// 		},
-						// 	],
-						// },
-						// {
-						// 	id: "update-fname",
-						// 	update: "firstname",
-						// 	trigger: "summary",
-						// },
-						// {
-						// 	id: "update-lname",
-						// 	update: "lastname",
-						// 	trigger: "summary",
-						// },
-						// {
-						// 	id: "update-zip",
-						// 	update: "zipcode",
-						// 	trigger: "summary",
-						// },
-						// {
-						// 	id: "update-email",
-						// 	update: "email",
-						// 	trigger: "summary",
-						// },
-						// {
-						// 	id: "askme",
-						// 	message: "What would you like to know?",
-						// 	trigger: "command",
-						// 	placeholder: "Type Command Here...",
-						// },
+						{
+							id: "firstnameQ",
+							message: "What is your first name?",
+							trigger: "firstname",
+						},
+						{
+							id: "firstname",
+							user: true,
+							trigger: "lastnameQ",
+							placeholder: "Enter First Name Here...",
+						},
+						{
+							id: "lastnameQ",
+							message:
+								"Hi {previousValue}! What is your last name?",
+							trigger: "lastname",
+						},
+						{
+							id: "lastname",
+							user: true,
+							trigger: "zipcodeQ",
+							placeholder: "Enter Last Name Here...",
+						},
+						{
+							id: "zipcodeQ",
+							message: "What is your zipcode?",
+							trigger: "zipcode",
+						},
+						{
+							id: "zipcode",
+							user: true,
+							trigger: "emailQ",
+							placeholder: "Enter Zip Code Here...",
+							validator: (value) => {
+								let zip = value;
+								console.log(zip);
+								if (isNaN(zip)) {
+									return "must be a valid zip";
+								}
+								return true;
+							},
+						},
+						{
+							id: "emailQ",
+							message: "What is your email address?",
+							trigger: "email",
+						},
+						{
+							id: "email",
+							user: true,
+							trigger: "summary",
+							placeholder: "Enter Email Here...",
+						},
+						{
+							id: "summary",
+							message: "Great! Check out your summary below",
+							trigger: "review",
+						},
+						{
+							id: "review",
+							component: <Review />,
+							asMessage: true,
+							trigger: "update",
+						},
+						{
+							id: "update",
+							message: "Would you like to update anything?",
+							trigger: "update-question",
+						},
+						{
+							id: "update-question",
+							options: [
+								{
+									value: "yes",
+									label: "Yes",
+									trigger: "update-yes",
+								},
+								{ value: "no", label: "No", trigger: "askme" },
+							],
+						},
+						{
+							id: "update-yes",
+							message: "What field would you like to update?",
+							trigger: "update-fields",
+						},
+						{
+							id: "update-fields",
+							options: [
+								{
+									value: "firstname",
+									label: "First Name",
+									trigger: "update-fname",
+								},
+								{
+									value: "lastname",
+									label: "Last Name",
+									trigger: "update-lname",
+								},
+								{
+									value: "zipcode",
+									label: "Zip",
+									trigger: "update-zip",
+								},
+								{
+									value: "email",
+									label: "Email",
+									trigger: "update-email",
+								},
+							],
+						},
+						{
+							id: "update-fname",
+							update: "firstname",
+							trigger: "summary",
+						},
+						{
+							id: "update-lname",
+							update: "lastname",
+							trigger: "summary",
+						},
+						{
+							id: "update-zip",
+							update: "zipcode",
+							trigger: "summary",
+						},
+						{
+							id: "update-email",
+							update: "email",
+							trigger: "summary",
+						},
+						{
+							id: "askme",
+							message: "What would you like to know?",
+							trigger: "command",
+							placeholder: "Type Command Here...",
+						},
 						{
 							id: "command",
 							options: [
@@ -255,7 +228,7 @@ class SimpleForm extends Component {
 								{
 									value: "lastname",
 									label: "Temp",
-									trigger: "command",
+									trigger: "temperature",
 								},
 								{
 									value: "zipcode",
@@ -272,6 +245,12 @@ class SimpleForm extends Component {
 						{
 							id: "weather",
 							component: <Weather />,
+							asMessage: true,
+							trigger: "command",
+						},
+						{
+							id: "temperature",
+							component: <Temp />,
 							asMessage: true,
 							trigger: "command",
 						},
