@@ -1,111 +1,51 @@
-const fs = require("fs");
-const bodyParser = require("body-parser");
+var express = require("express");
+//var cookieParser = require("cookie-parser");
+//var logger = require("morgan");
+var cors = require("cors");
+var fetch = require("node-fetch");
 
-const express = require("express");
-const app = express();
 const port = 3001;
 
-const Pool = require("pg").Pool;
+var app = express();
 
-const connection = new Pool({
-	user: "postgres",
-	host: "localhost",
-	database: "email",
-	password: "Orfitelli5",
-	port: 5432,
-});
+app.use(cors());
+//app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+//app.use(cookieParser());
 
-app.use(bodyParser.json());
+var MongoClient = require("mongodb").MongoClient;
 
-//const emails = JSON.parse(fs.readFileSync("emails.JSON"))
+MongoClient.connect("mongodb://127.0.0.1:27017/chatbot", {
+  useUnifiedTopology: true,
+})
+  .then((client) => {
+    const db = client.db("chatbot");
+    const userCollection = db.collection("users");
+    const historyCollection = db.collection("history");
 
-app.get("/emails", (req, res) => {
-	connection.query("SELECT * FROM emails", (error, results) => {
-		if (error) {
-			res.send(error.message);
-		} else {
-			res.send(results.rows);
-		}
-	});
-});
+    app.get("/", (req, res) => {
+      userCollection.find().toArray((err, result) => {
+        if (err) throw err;
 
-app.get("/emails/:id", (req, res) => {
-	let id = req.params.id;
+        console.log(result)
+        res.send(result);
+      });
+    });
 
-	connection.query(
-		"SELECT * FROM emails WHERE id = $1",
-		[id],
-		(error, results) => {
-			if (error) {
-				res.send(error.message);
-			} else {
-				if (results.rowCount != 0) {
-					res.send(results.rows);
-				} else res.send(404);
-			}
-		}
-	);
-});
+    app.get("/history", (req, res) => {
+        historyCollection.find().toArray((err, result) => {
+          if (err) throw err;
+  
+          console.log(result)
+          res.send(result);
+        });
+      });
 
-app.get("/search", (req, res) => {
-    const query = req.query.query ? `%${req.query.query}%` : '%';
-    console.log(query)
-	connection.query(
-		"SELECT * FROM emails WHERE subject ILIKE $1",
-		[query],
-		(error, results) => {
-			if (error) {
-				res.send(error.message);
-			} else {
-				if (results.rowCount != 0) {
-					res.send(results.rows);
-				} else res.send(404);
-			}
-		}
-	);
-});
+  })
+  .catch(console.error);
 
-app.post("/send", function (req, res) {
-	let result;
-	const emailSender = req.body;
-	if (
-		emailSender.sender &&
-		emailSender.recipient &&
-		emailSender.subject &&
-		emailSender.message
-	) {
-		connection.query(
-			"INSERT INTO emails(sender,recipient,subject,message) VALUES ($1, $2, $3, $4)",
-			[
-				emailSender.sender,
-				emailSender.recipient,
-				emailSender.subject,
-				emailSender.message,
-			],
-			(error, results) => {
-				if (error) {
-					res.send(error.message);
-				} else {
-					result = {
-						status: "success",
-						message: "The message was successfully sent",
-                    };
-                    
-				}
-			}
-		);
-	} else {
-		result = {
-			status: "failed",
-			message: "The message was not sent",
-		};
-		res.status(400);
-    }
-
-    res.send(result)
-    
-});
-
-app.listen(port, () =>
+  app.listen(port, () =>
 	console.log(`Example app listening at http://localhost:${port}`)
 );
+
