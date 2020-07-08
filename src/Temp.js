@@ -12,8 +12,7 @@ export class Weather extends Component {
 			result: false,
 			error: false,
             error_msg: "",
-            city:"",
-            img: ""
+            city: ""
 		};
 
 		this.triggetNext = this.triggetNext.bind(this);
@@ -24,7 +23,9 @@ export class Weather extends Component {
         console.log(self.props.steps.zipcode.value)
 		self.setState({ loading: true });
 		// const hostname = process.env.REACT_APP_HOSTNAME;
-		const url = `http://api.openweathermap.org/data/2.5/weather?zip=${self.props.steps.zipcode.value},us&appid=defbd6e67d1870e6b1d66a6cfe34f95b`;
+        const url = `http://api.openweathermap.org/data/2.5/weather?zip=${self.props.steps.zipcode.value},us&appid=defbd6e67d1870e6b1d66a6cfe34f95b`;
+        
+
 
 		fetch(url)
 			.then(function(response) {
@@ -36,17 +37,13 @@ export class Weather extends Component {
 			})
 			.then(function(responseAsJson) {
 				// // Do stuff with the JSON
-                 var output = responseAsJson.weather[0].description;
+                 var output = responseAsJson.main.temp;
                  var cityname = responseAsJson.name;
-                 var imgurl = `http://openweathermap.org/img/wn/${responseAsJson.weather[0].icon}@2x.png`
-                 output = output.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' ');
-                 console.log(cityname)
-                 console.log(output);
+                 
+                 output = Math.floor(output * (9/5) -459.67);
 				 self.setState({ loading: false });
                  self.setState({ weather: output });
-                 self.setState({ city: cityname });
-				 self.setState({ img: imgurl });
-                 
+				 self.setState({ city: cityname });
                  
 			})
 			.catch(function(error) {
@@ -70,8 +67,7 @@ export class Weather extends Component {
 			weather,
 			error,
             error_msg,
-            city,
-            img
+            city
 		} = this.state;
 
 		if (loading) {
@@ -88,8 +84,7 @@ export class Weather extends Component {
 		} else {
 			return (
 				<div>
-					Today's Weather in {city}: {weather}  <br></br>
-                    <img src= {img} width = "50px"></img>
+					It's {weather} Degrees Farenheit in {city}
 				</div>
 			);
 		}
