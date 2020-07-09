@@ -1,20 +1,17 @@
 import React, { Component } from "react";
-import Update from "./Update.js";
 
-export class Weather extends Component {
+export class History extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			zip: "",
 			loading: true,
-			weather: "",
 			trigger: false,
 			result: false,
 			error: false,
 			error_msg: "",
-			city: "",
-			img: "",
+			history: "",
 		};
 
 		this.triggetNext = this.triggetNext.bind(this);
@@ -22,11 +19,14 @@ export class Weather extends Component {
 
 	componentWillMount() {
 		const self = this;
-		console.log(self.props.steps.zipcode.value);
+
 		self.setState({ loading: true });
 		// const hostname = process.env.REACT_APP_HOSTNAME;
-		const url = `http://api.openweathermap.org/data/2.5/weather?zip=${self.props.steps.zipcode.value},us&appid=defbd6e67d1870e6b1d66a6cfe34f95b`;
+		const url = `http://localhost:3001/history/:${self.props.steps.email.value}`;
+		console.log(url);
+		console.log(self.props.steps.email.value)
 
+		//${self.props.steps.email.value}
 		fetch(url)
 			.then(function(response) {
 				if (!response.ok) {
@@ -37,23 +37,11 @@ export class Weather extends Component {
 			})
 			.then(function(responseAsJson) {
 				// // Do stuff with the JSON
-				var output = responseAsJson.weather[0].description;
-				var cityname = responseAsJson.name;
-				var imgurl = `http://openweathermap.org/img/wn/${responseAsJson.weather[0].icon}@2x.png`;
-				output = output
-					.toLowerCase()
-					.split(" ")
-					.map(
-						(word) =>
-							word.charAt(0).toUpperCase() + word.substring(1)
-					)
-					.join(" ");
-				console.log(cityname);
+				var output = JSON.stringify(responseAsJson);
 				console.log(output);
+
 				self.setState({ loading: false });
-				self.setState({ weather: output });
-				self.setState({ city: cityname });
-				self.setState({ img: imgurl });
+				self.setState({ history: output });
 			})
 			.catch(function(error) {
 				console.log("Looks like there was a problem: \n", error);
@@ -71,7 +59,10 @@ export class Weather extends Component {
 	}
 
 	render() {
-		const { loading, weather, error, error_msg, city, img } = this.state;
+        const { loading, error, error_msg, history } = this.state;
+        
+        // let content = history.map((x, i) => x.message)
+        // let body = (<div>{content}</div>);
 
 		if (loading) {
 			return <p>Just a minute, looking that up...</p>;
@@ -85,15 +76,13 @@ export class Weather extends Component {
 				</div>
 			);
 		} else {
-			return (
-				<div>
-					Today's Weather in {city}: {weather} <br></br>
-					<img src={img} width="50px"></img>
-					<Update city = {this.city} weather = {this.weather} email = {this.props.steps.email.value}/>
-				</div>
-			);
+			return (<div>
+                    {history}
+            </div>
+                
+            );
 		}
 	}
 }
 
-export default Weather;
+export default History;

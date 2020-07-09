@@ -103,31 +103,31 @@ db.history.insert([
     {
         "message": "Temperature is 80 degrees",
         "emailAddress": "mambler7@arizona.edu",
-        "date": new Date()
+        "date": new Date().toString()
     },
     {
         "message": "Temperature is 70 degrees",
         "emailAddress": "mambler7@arizona.edu",
-        "date": new Date()
+        "date": new Date().toString()
     },
     {
         "message": "Rainy weather today",
         "emailAddress": "mambler7@arizona.edu",
-        "date": new Date()
+        "date": new Date().toString()
     },
     {
         "message": "Temperature is 80 degrees",
         "emailAddress": "mambler7@arizona.edu",
-        "date": new Date()
+        "date": new Date().toString()
     },
     {
         "message": "Clear skies today",
         "emailAddress": "raggeta@alibaba.com",
-        "date": new Date()
+        "date": new Date().toString()
     },
     {
         "message": "Temperature is 90 degrees",
         "emailAddress": "tragdalee@cisco.com",
-        "date": new Date()
+        "date": new Date().toString()
     }
 ])

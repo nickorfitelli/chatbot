@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ChatBot from "react-simple-chatbot";
-import Weather from "./Weather.js"
-import Temp from "./Temp.js"
+import Weather from "./Weather.js";
+import Temp from "./Temp.js";
+import History from "./History.js";
 
 class Review extends Component {
 	//init local state, assigning object to this.state
@@ -81,6 +82,26 @@ class SimpleForm extends Component {
 			<>
 				<ChatBot
 					steps={[
+						{
+							id: "1",
+							message: "Hi! Is this your first time here?",
+							trigger: "2",
+						},
+						{
+							id: "2",
+							options: [
+								{
+									value: "yes",
+									label: "Yes",
+									trigger: "firstnameQ",
+								},
+								{
+									value: "no",
+									label: "No",
+									trigger: "emailQ",
+								},
+							],
+						},
 						{
 							id: "firstnameQ",
 							message: "What is your first name?",
@@ -221,25 +242,30 @@ class SimpleForm extends Component {
 							id: "command",
 							options: [
 								{
-									value: "forecast",
+									value: "weather",
 									label: "Weather",
 									trigger: "weather",
 								},
 								{
-									value: "lastname",
+									value: "temperature",
 									label: "Temp",
 									trigger: "temperature",
 								},
 								{
-									value: "zipcode",
+									value: "history",
 									label: "History",
-									trigger: "command",
+									trigger: "history",
 								},
 								{
-									value: "email",
+									value: "clear",
 									label: "Clear History",
 									trigger: "command",
 								},
+								{
+									value: "update",
+									label: "Update Info",
+									trigger: "update-fields"
+								}
 							],
 						},
 						{
@@ -254,12 +280,18 @@ class SimpleForm extends Component {
 							asMessage: true,
 							trigger: "command",
 						},
+						{
+							id: "history",
+							component: <History />,
+							asMessage: true,
+							trigger: "command",
+						},
 					]}
-				  headerTitle="Weatherman"
-                  placeholder="..."
-                  customDelay="200"
-                  floating="false"
-                  width="700px"
+					headerTitle="Weatherman"
+					placeholder="..."
+					customDelay="200"
+					floating="false"
+					width="700px"
 				/>
 			</>
 		);
