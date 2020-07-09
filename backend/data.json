@@ -1,0 +1,133 @@
+db.users.insert([
+    {
+        "firstName": "Jayme",
+        "lastName": "Brine",
+        "zipCode": "94533",
+        "emailAddress": "jbrine0@people.com.cn"
+    },
+    {
+        "firstName": "Fabe",
+        "lastName": "Lakenton",
+        "zipCode": "01189",
+        "emailAddress": "flakenton1@china.com.cn"
+    },
+    {
+        "firstName": "Johanna",
+        "lastName": "Stables",
+        "zipCode": "01189",
+        "emailAddress": "jstables2@cbsnews.com"
+    },
+    {
+        "firstName": "Sondra",
+        "lastName": "Houlahan",
+        "zipCode": "02421",
+        "emailAddress": "shoulahan4@tumblr.com"
+    },
+    {
+        "firstName": "Aviva",
+        "lastName": "Iorns",
+        "zipCode": "02421",
+        "emailAddress": "aiorns6@hugedomains.com"
+    },
+    {
+        "firstName": "Mortimer",
+        "lastName": "Ambler",
+        "zipCode": "94533",
+        "emailAddress": "mambler7@arizona.edu"
+    },
+    {
+        "firstName": "Mikaela",
+        "lastName": "Walewicz",
+        "zipCode": "94585",
+        "emailAddress": "mwalewicz9@instagram.com"
+    },
+    {
+        "firstName": "Raimund",
+        "lastName": "Agget",
+        "zipCode": "94534",
+        "emailAddress": "raggeta@alibaba.com"
+    },
+    {
+        "firstName": "Roma",
+        "lastName": "Barock",
+        "zipCode": "02425",
+        "emailAddress": "rbarockc@a8.net"
+    },
+    {
+        "firstName": "Tally",
+        "lastName": "Ragdale",
+        "zipCode": "02421",
+        "emailAddress": "tragdalee@cisco.com"
+    },
+    {
+        "firstName": "Joellyn",
+        "lastName": "De Dei",
+        "zipCode": "02465",
+        "emailAddress": "jdedeif@jugem.jp"
+    },
+    {
+        "firstName": "Elmira",
+        "lastName": "Benting",
+        "zipCode": "94533",
+        "emailAddress": "ebentingi@eventbrite.com"
+    },
+    {
+        "firstName": "Tildi",
+        "lastName": "Woofenden",
+        "zipCode": "94574",
+        "emailAddress": "twoofendenj@zimbio.com"
+    },
+    {
+        "firstName": "Edan",
+        "lastName": "Deinhard",
+        "zipCode": "02421",
+        "emailAddress": "edeinhardk@shutterfly.com"
+    },
+    {
+        "firstName": "Jedidiah",
+        "lastName": "Beadel",
+        "zipCode": "02455",
+        "emailAddress": "jbeadelm@tamu.edu"
+    },
+    ,
+    {
+        "firstName": "Carolus",
+        "lastName": "Treffrey",
+        "zipCode": "11117",
+        "emailAddress": "ctreffreyo@mysql.com"
+    }
+])
+  
+
+db.history.insert([
+    {
+        "message": "Temperature is 80 degrees",
+        "emailAddress": "mambler7@arizona.edu",
+        "date": new Date().toString()
+    },
+    {
+        "message": "Temperature is 70 degrees",
+        "emailAddress": "mambler7@arizona.edu",
+        "date": new Date().toString()
+    },
+    {
+        "message": "Rainy weather today",
+        "emailAddress": "mambler7@arizona.edu",
+        "date": new Date().toString()
+    },
+    {
+        "message": "Temperature is 80 degrees",
+        "emailAddress": "mambler7@arizona.edu",
+        "date": new Date().toString()
+    },
+    {
+        "message": "Clear skies today",
+        "emailAddress": "raggeta@alibaba.com",
+        "date": new Date().toString()
+    },
+    {
+        "message": "Temperature is 90 degrees",
+        "emailAddress": "tragdalee@cisco.com",
+        "date": new Date().toString()
+    }
+])
