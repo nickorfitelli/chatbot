@@ -8,7 +8,7 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
-RUN yarn install
+RUN npm install
 
 # add app
 COPY . ./
