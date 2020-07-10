@@ -19,4 +19,4 @@ COPY . .
 EXPOSE 3001
 
 # start app
-CMD ["npm", "backend.js"]
+CMD ["node", "backend.js"]
