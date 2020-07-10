@@ -14,9 +14,9 @@ COPY package*.json ./
 RUN npm install
 
 # add app
-COPY . .
+COPY . /app
 
 EXPOSE 3001
 
 # start app
-CMD ["node", "backend.js"]
+CMD ["npm", "start"]
