@@ -1,13 +1,22 @@
-FROM node:11-alpine
+# pull official base image
+FROM node:13.12.0-alpine
 
-RUN mkdir -p /usr/src/app
+# set working directory
+WORKDIR /app
 
-WORKDIR /usr/src/app
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
-COPY . .
+# Copies package.json and package-lock.json to Docker environment
+COPY package*.json ./
 
+# install app dependencies
 RUN npm install
 
-EXPOSE 3000
+# add app
+COPY . .
 
-CMD ["node", "backend.js"]
+EXPOSE 3001
+
+# start app
+CMD ["npm", "backend.js"]
