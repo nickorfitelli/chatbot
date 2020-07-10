@@ -14,7 +14,7 @@ COPY package*.json ./
 RUN npm install
 
 # add app
-COPY . /app
+COPY . .
 
 EXPOSE 3001
 
